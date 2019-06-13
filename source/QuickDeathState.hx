@@ -1,63 +1,14 @@
 package;
 
-import flixel.FlxG;
 import flixel.FlxState;
-import flixel.FlxObject;
-import flixel.FlxSprite;
-import flixel.group.FlxGroup;
-import flixel.text.FlxText;
-import flixel.addons.ui.FlxClickArea;
 import flixel.util.FlxTimer;
-import flixel.util.FlxColor;
 
-class TapArea extends FlxGroup
-{
-    public function new(listener)
-    {
-        super();
-        var w = FlxG.width;
-        var h = Std.int(FlxG.height*0.8);
-        var ca = new FlxClickArea(0, 0, w, h, listener);
-        var sp = new FlxSprite(0, 0);
-        sp.makeGraphic(w, h, FlxColor.RED);
-        add(sp);
-        add(ca);
-    }
-}
-class TheText extends FlxText
-{
-    public function new()
-    {
-        super(0, 0, 0, "Tap", 200);
-        font = "komika_full.ttf";
-        screenCenter();
-    }
-    public function change()
-    {
-        text = String.fromCharCode(Std.random(25)+65);
-        this.screenCenter();
-    }
-    public function dead()
-    {
-        text = "DEAD";
-        this.screenCenter();
-    }
-}
 
-class TimeDisplay extends FlxText
+class QuickDeathState extends FlxState
 {
-    public function new()
-    {
-        var s = 32;
-        super(0, FlxG.height-s-3, 0, "", s);
-    }
-}
-
-class PlayState extends FlxState
-{
-    private var _text:TheText;
+    private var _text:Elements.TheText;
     private var _timer:FlxTimer;
-    private var _time_display:TimeDisplay;
+    private var _time_display:Elements.TimeDisplay;
     private var _time_allowed:Float;
     private var _count:Int = 0;
 
@@ -81,12 +32,12 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		super.create();
-        var tap_area = new TapArea(listener);
+        var tap_area = new Elements.TapArea(listener);
         add(tap_area);
-        _text = new TheText();
+        _text = new Elements.TheText();
         add(_text);
         _timer = new FlxTimer();
-        _time_display = new TimeDisplay();
+        _time_display = new Elements.TimeDisplay();
         add(_time_display);
         _time_allowed = 10;
 	}
