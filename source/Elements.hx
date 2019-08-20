@@ -26,7 +26,7 @@ class TheText extends FlxText
     public function new()
     {
         super(0, 0, 0, "Tap", 200);
-        font = "komika_full.ttf";
+        font = "roboto_bold.ttf";
         screenCenter();
     }
     public function change()
@@ -46,5 +46,6 @@ class TimeDisplay extends FlxText
     {
         var s = 32;
         super(0, FlxG.height-s-3, 0, "", s);
+        font = "roboto_regular.ttf";
     }
 }

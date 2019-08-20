@@ -2,32 +2,18 @@ package;
 
 import flixel.FlxState;
 import flixel.util.FlxTimer;
-
+import Helper.*;
 
 class QuickDeathState extends FlxState
 {
+    private static var _start_time:Int = 10;
+    private static var _time_decrease:Float = 0.95;
+
     private var _text:Elements.TheText;
     private var _timer:FlxTimer;
     private var _time_display:Elements.TimeDisplay;
     private var _time_allowed:Float;
     private var _count:Int = 0;
-
-    public static function floatToStringPrecision(n:Float, prec:Int)
-    {
-        n = Math.round(n * Math.pow(10, prec));
-        var str = ''+n;
-        var len = str.length;
-        if(len <= prec){
-            while(len < prec){
-                str = '0'+str;
-                len++;
-            }
-            return '0.'+str;
-        }
-        else{
-            return str.substr(0, str.length-prec) + '.'+str.substr(str.length-prec);
-        }
-    }
 
 	override public function create():Void
 	{
@@ -39,18 +25,18 @@ class QuickDeathState extends FlxState
         _timer = new FlxTimer();
         _time_display = new Elements.TimeDisplay();
         add(_time_display);
-        _time_allowed = 10;
+        _time_allowed = _start_time;
 	}
     public function listener()
     {
         _text.change();
         _timer.start(_time_allowed, function(Timer:FlxTimer){_time_out();}, 1);
-        _time_allowed *= 0.95;
+        _time_allowed *= _time_decrease;
         _count += 1;
     }
     public function _time_out()
     {
-        _time_allowed = 10;
+        _time_allowed = _start_time;
         _count = 0;
         _text.dead();
     }
